@@ -62,7 +62,7 @@
                 android:id="@+id/imgThird"
                 android:scaleType="center"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/nature2"
+                android:src="@drawable/nature3"
                 app:riv_corner_radius="15dp"
         />
     </LinearLayout>
@@ -92,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@+id/guideline4"
             android:id="@+id/imgFive"
             android:scaleType="center"
-            android:src="@drawable/nature4"
+            android:src="@drawable/nature5"
             app:riv_corner_radius="15dp"
             android:layout_marginLeft="20dp"
             app:layout_constraintStart_toEndOf="@+id/imgFour"
@@ -104,7 +104,7 @@
             app:layout_constraintTop_toBottomOf="@+id/guideline4"
             android:id="@+id/imgSix"
             android:scaleType="center"
-            android:src="@drawable/nature4"
+            android:src="@drawable/nature6"
             app:riv_corner_radius="15dp"
             android:layout_marginLeft="20dp"
             app:layout_constraintStart_toEndOf="@+id/imgFive"
