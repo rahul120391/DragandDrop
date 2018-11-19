@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener, View.OnDragL
     private val mSixImage by lazy { findViewById<RoundedImageView>(R.id.imgSix) }
     private lateinit var mSourceImageView: RoundedImageView
     private lateinit var mDestImageView: RoundedImageView
-    private var mSourceImageResource: Drawable?=null
-    private var mDestImageResource: Drawable? = null
+    private var mSourceImageResource: Int?=null
+    private var mDestImageResource: Int? = null
+    private val mMap by lazy { HashMap<String,Int>() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,22 +37,27 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener, View.OnDragL
         mFirstImage.setOnLongClickListener(this)
         mFirstImage.setOnDragListener(this)
         mFirstImage.tag = "First Image"
+        mMap[mFirstImage.tag.toString()]=R.drawable.nature1
         mSecondImage.setOnLongClickListener(this)
         mSecondImage.setOnDragListener(this)
         mSecondImage.tag = "Second Image"
+        mMap[mSecondImage.tag.toString()]=R.drawable.nature2
         mThirdImage.setOnLongClickListener(this)
         mThirdImage.setOnDragListener(this)
         mThirdImage.tag = "Third Image"
+        mMap[mThirdImage.tag.toString()]=R.drawable.nature3
         mFourImage.setOnLongClickListener(this)
         mFourImage.setOnDragListener(this)
         mFourImage.tag = "Four Image"
+        mMap[mFourImage.tag.toString()]=R.drawable.nature4
         mFiveImage.setOnLongClickListener(this)
         mFiveImage.setOnDragListener(this)
         mFiveImage.tag = "Five Image"
+        mMap[mFiveImage.tag.toString()]=R.drawable.nature5
         mSixImage.setOnLongClickListener(this)
         mSixImage.setOnDragListener(this)
         mSixImage.tag = "Six Image"
-
+        mMap[mSixImage.tag.toString()]=R.drawable.nature6
     }
 
 
@@ -64,7 +70,6 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener, View.OnDragL
             R.id.imgFour,
             R.id.imgFive,
             R.id.imgSix -> {
-                println("tag is ${view.tag}")
                 val item = ClipData.Item(view.tag as CharSequence)
                 val dragData = ClipData(
                     view.tag as? CharSequence,
@@ -77,9 +82,8 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener, View.OnDragL
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     view.startDragAndDrop(dragData, myShadow, null, 0)
                 }
+                mSourceImageResource= mMap[view.tag.toString()]
                 mSourceImageView = view as RoundedImageView
-                println("drawable ${mFirstImage.drawable.constantState}")
-                mSourceImageResource = mSourceImageView.drawable
             }
 
         }
@@ -99,10 +103,10 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener, View.OnDragL
             }
             ACTION_DROP -> {
                 if (mSourceImageView != mDestImageView) {
-                    mSourceImageView.setImageDrawable(mDestImageResource)
-                    mDestImageView.setImageDrawable(mSourceImageResource)
-                  //  mSourceImageView.setImageResource(mDestImageResource)
-                   // mDestImageView.setImageResource(mSourceImageResource)
+                    mSourceImageResource?.let { mDestImageView.setImageResource(it) }
+                    mDestImageResource?.let { mSourceImageView.setImageResource(it) }
+                    mMap[mSourceImageView.tag.toString()] = mDestImageResource!!
+                    mMap[mDestImageView.tag.toString()] = mSourceImageResource!!
                 }
                 return true
             }
@@ -110,8 +114,8 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener, View.OnDragL
 
             }
             ACTION_DRAG_ENTERED -> {
+                mDestImageResource= mMap[view?.tag.toString()]
                 mDestImageView = view as RoundedImageView
-                mDestImageResource = mDestImageView.drawable
                 return true
             }
         }
