@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Active" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+    <style name="TextInputLayoutAppearnce" parent="Widget.Design.TextInputLayout">
+        <item name="hintTextAppearance">@style/Active</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
+        <item name="android:colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
+    </style>
 </resources>
